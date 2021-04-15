@@ -19,6 +19,7 @@
 		98489FA5262878F70096F69D /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489FA4262878F70096F69D /* Stack.m */; };
 		98489FAA262879110096F69D /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489FA9262879110096F69D /* Queue.m */; };
 		98489FAE2628793B0096F69D /* ListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489FAD2628793B0096F69D /* ListNode.m */; };
+		989AE36F26287D6500168053 /* Maze.m in Sources */ = {isa = PBXBuildFile; fileRef = 989AE36E26287D6500168053 /* Maze.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		98489FA9262879110096F69D /* Queue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		98489FAC2628792E0096F69D /* ListNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListNode.h; sourceTree = "<group>"; };
 		98489FAD2628793B0096F69D /* ListNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListNode.m; sourceTree = "<group>"; };
+		989AE36E26287D6500168053 /* Maze.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Maze.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				98489FAC2628792E0096F69D /* ListNode.h */,
 				98489FAD2628793B0096F69D /* ListNode.m */,
 				98489FA4262878F70096F69D /* Stack.m */,
+				989AE36E26287D6500168053 /* Maze.m */,
 				98489FA82628790A0096F69D /* Queue.h */,
 				98489FA9262879110096F69D /* Queue.m */,
 				98489F822628725F0096F69D /* Maze */,
@@ -178,6 +181,7 @@
 				98489F97262872600096F69D /* main.m in Sources */,
 				98489FAA262879110096F69D /* Queue.m in Sources */,
 				98489FA5262878F70096F69D /* Stack.m in Sources */,
+				989AE36F26287D6500168053 /* Maze.m in Sources */,
 				98489F852628725F0096F69D /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
