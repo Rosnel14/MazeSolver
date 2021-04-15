@@ -15,7 +15,6 @@
 		98489F91262872600096F69D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98489F90262872600096F69D /* Assets.xcassets */; };
 		98489F94262872600096F69D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98489F92262872600096F69D /* Main.storyboard */; };
 		98489F97262872600096F69D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489F96262872600096F69D /* main.m */; };
-		98489FA0262875360096F69D /* MazeTests in Resources */ = {isa = PBXBuildFile; fileRef = 98489F9F262875360096F69D /* MazeTests */; };
 		98489FA5262878F70096F69D /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489FA4262878F70096F69D /* Stack.m */; };
 		98489FAA262879110096F69D /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489FA9262879110096F69D /* Queue.m */; };
 		98489FAE2628793B0096F69D /* ListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489FAD2628793B0096F69D /* ListNode.m */; };
@@ -37,7 +36,6 @@
 		98489F95262872600096F69D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98489F96262872600096F69D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		98489F98262872600096F69D /* Maze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Maze.entitlements; sourceTree = "<group>"; };
-		98489F9F262875360096F69D /* MazeTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MazeTests; sourceTree = "<group>"; };
 		98489FA2262876E50096F69D /* Maze.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Maze.h; sourceTree = "<group>"; };
 		98489FA3262878EF0096F69D /* Stack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		98489FA4262878F70096F69D /* Stack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
@@ -46,6 +44,10 @@
 		98489FAC2628792E0096F69D /* ListNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListNode.h; sourceTree = "<group>"; };
 		98489FAD2628793B0096F69D /* ListNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListNode.m; sourceTree = "<group>"; };
 		989AE36E26287D6500168053 /* Maze.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Maze.m; sourceTree = "<group>"; };
+		989AE3722628840200168053 /* hugeMaze.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = hugeMaze.txt; sourceTree = "<group>"; };
+		989AE3732628840200168053 /* mediumMaze.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = mediumMaze.txt; sourceTree = "<group>"; };
+		989AE3742628840200168053 /* smallMaze.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = smallMaze.txt; sourceTree = "<group>"; };
+		989AE3752628840200168053 /* largeMaze.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = largeMaze.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,12 +64,13 @@
 		98489F772628725E0096F69D = {
 			isa = PBXGroup;
 			children = (
-				98489FA2262876E50096F69D /* Maze.h */,
 				98489FA3262878EF0096F69D /* Stack.h */,
+				98489FA2262876E50096F69D /* Maze.h */,
+				989AE36E26287D6500168053 /* Maze.m */,
 				98489FAC2628792E0096F69D /* ListNode.h */,
 				98489FAD2628793B0096F69D /* ListNode.m */,
 				98489FA4262878F70096F69D /* Stack.m */,
-				989AE36E26287D6500168053 /* Maze.m */,
+				989AE371262883EA00168053 /* MazeRescources */,
 				98489FA82628790A0096F69D /* Queue.h */,
 				98489FA9262879110096F69D /* Queue.m */,
 				98489F822628725F0096F69D /* Maze */,
@@ -86,7 +89,6 @@
 		98489F822628725F0096F69D /* Maze */ = {
 			isa = PBXGroup;
 			children = (
-				98489F9F262875360096F69D /* MazeTests */,
 				98489F832628725F0096F69D /* AppDelegate.h */,
 				98489F842628725F0096F69D /* AppDelegate.m */,
 				98489F862628725F0096F69D /* GameScene.sks */,
@@ -102,6 +104,17 @@
 				98489F98262872600096F69D /* Maze.entitlements */,
 			);
 			path = Maze;
+			sourceTree = "<group>";
+		};
+		989AE371262883EA00168053 /* MazeRescources */ = {
+			isa = PBXGroup;
+			children = (
+				989AE3722628840200168053 /* hugeMaze.txt */,
+				989AE3752628840200168053 /* largeMaze.txt */,
+				989AE3732628840200168053 /* mediumMaze.txt */,
+				989AE3742628840200168053 /* smallMaze.txt */,
+			);
+			path = MazeRescources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,7 +174,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				98489F872628725F0096F69D /* GameScene.sks in Resources */,
-				98489FA0262875360096F69D /* MazeTests in Resources */,
 				98489F91262872600096F69D /* Assets.xcassets in Resources */,
 				98489F892628725F0096F69D /* Actions.sks in Resources */,
 				98489F94262872600096F69D /* Main.storyboard in Resources */,
