@@ -64,11 +64,18 @@
         self.pathStack = [[Stack alloc]init];
         self.pathStack = nil;
         self.pathQueue = nil;
+        
+        //probably have to parse each char to create the rectangles later
         self.mazeImage = [fileContent componentsSeparatedByString:@"\n"];
     }
     
     return self;
             
+}
+
+//return true or false if maze can be solved
+-(bool)solve{
+    
 }
 
 @end

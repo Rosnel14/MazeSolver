@@ -43,5 +43,5 @@
 
 #endif /* Maze_h */
 
-//probably have to parse each char to create the rectangles later
-//        self.mazeImage = [fileContent componentsSeparatedByString:@"\n"];
+
+

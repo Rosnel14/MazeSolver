@@ -15,17 +15,13 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // Setup code that might create autoreleased objects goes here.
-        NSString * filename;
-        NSString *fileContent;
-        NSError *error;
+        //Maze * myMaze = [[Maze alloc]initWithSize:0];
         
-        filename = [[NSBundle mainBundle] pathForResource:@"smallMaze" ofType:@"txt"];
-        fileContent = [NSString stringWithContentsOfFile:filename encoding:NSUTF8StringEncoding error:NULL];
-            if (error) NSLog(@"Error reading file: %@", error.localizedDescription);
-
-         NSLog(@"contents: %@", fileContent);
-         
-
     }
     return NSApplicationMain(argc, argv);
 }
+
+
+//method for parsing wall elements
+//        NSString * s =[myMaze.mazeImage.firstObject substringToIndex:1];
+//        NSLog(@"%@",s);
