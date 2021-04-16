@@ -24,18 +24,13 @@
 //pathfinding using BFS
 @property Queue * pathQueue;
 
-//this will determine how big the maze is
-//base of what file is passed 
-@property NSString * fileNameFromSize;
+
+//This array *should* be a visual
+//of the array read in from the txt file
+@property NSArray * mazeImage;
 
 //constructor as blank maze
 -(instancetype)init;
-
-//construct as a DFS maze
--(instancetype)initWithStackAndSize:(int)size;
-
-//construct as a BFS maze
--(instancetype)initWithQueueAndSize:(int)size;
 
 //solve method, return true or false if the maze can solved
 -(bool)solve;
@@ -47,3 +42,6 @@
 
 
 #endif /* Maze_h */
+
+//probably have to parse each char to create the rectangles later
+//        self.mazeImage = [fileContent componentsSeparatedByString:@"\n"];

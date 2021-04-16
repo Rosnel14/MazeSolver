@@ -20,87 +20,39 @@
         self.pathStack = [[Stack alloc]init];
         self.pathStack = nil;
         self.pathQueue = nil;
-        self.fileNameFromSize = nil;
+        self.mazeImage = nil;
     }
     return self;
 }
 
--(instancetype)initWithStackAndSize:(int)size {
-    //this is just a placeholder until I figure out how to find file
-    NSString * filename;
-    switch (size) {
-        case 0:
-            filename = @"small";
-            break;
-        case 1:
-            filename = @"medium";
-            break;
-        case 2:
-            filename = @"large";
-            break;
-        case 3:
-            filename = @"huge";
-            break;
-        default:
-            break;
-    }
-    
-    if(self) {
-        self = [super init];
-        self.pathStack = [[Stack alloc]init];
-        self.pathQueue =[[Queue alloc]init];
-        self.pathQueue = nil;
-        self.fileNameFromSize = filename;
-    }
-    return self;
-    
-}
-
--(instancetype)initWithQueueAndSize:(int)size {
-    //this is just a placeholder string until I figure out how to find file
-    NSString * filename;
-    switch (size) {
-        case 0:
-            filename = @"small";
-            break;
-        case 1:
-            filename = @"medium";
-            break;
-        case 2:
-            filename = @"large";
-            break;
-        case 3:
-            filename = @"huge";
-            break;
-        default:
-            break;
-    }
-    
-    if(self) {
-        self = [super init];
-        self.pathStack = [[Stack alloc]init];
-        self.pathQueue =[[Queue alloc]init];
-        self.pathStack = nil;
-        self.fileNameFromSize = filename;
-    }
-    return self;
-}
-
+//0 is small, 1 is medium, 2 is large, 3 is huge
+//selector for size of the maze
 -(instancetype)initWithSize:(int)size {
-    //this is just a placeholder until I figure out how to find file
     NSString * filename;
+    NSString * fileContent;
+    NSError * error;
     switch (size) {
         case 0:
-            filename = @"small";
+            filename = [[NSBundle mainBundle] pathForResource:@"smallMaze" ofType:@"txt"];
+            fileContent = [NSString stringWithContentsOfFile:filename encoding:NSUTF8StringEncoding error:NULL];
+                if (error) NSLog(@"Error reading file: %@", error.localizedDescription);
             break;
         case 1:
-            filename = @"medium";
+            filename = [[NSBundle mainBundle] pathForResource:@"mediumMaze" ofType:@"txt"];
+            fileContent = [NSString stringWithContentsOfFile:filename encoding:NSUTF8StringEncoding error:NULL];
+                if (error) NSLog(@"Error reading file: %@", error.localizedDescription);
             break;
+            
         case 2:
-            filename = @"large";
+            filename = [[NSBundle mainBundle] pathForResource:@"largeMaze" ofType:@"txt"];
+            fileContent = [NSString stringWithContentsOfFile:filename encoding:NSUTF8StringEncoding error:NULL];
+                if (error) NSLog(@"Error reading file: %@", error.localizedDescription);
             break;
+            
         case 3:
-            filename = @"huge";
+            filename = [[NSBundle mainBundle] pathForResource:@"hugeMaze" ofType:@"txt"];
+            fileContent = [NSString stringWithContentsOfFile:filename encoding:NSUTF8StringEncoding error:NULL];
+                if (error) NSLog(@"Error reading file: %@", error.localizedDescription);
             break;
         default:
             break;
@@ -108,16 +60,15 @@
     
     if(self) {
         self = [super init];
+        self.pathQueue = [[Queue alloc] init];
         self.pathStack = [[Stack alloc]init];
-        self.pathQueue =[[Queue alloc]init];
         self.pathStack = nil;
         self.pathQueue = nil;
-        self.fileNameFromSize = filename;
+        self.mazeImage = [fileContent componentsSeparatedByString:@"\n"];
     }
+    
     return self;
+            
 }
 
--(bool)solve {
-    return NO; //blegh
-}
 @end
