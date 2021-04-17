@@ -75,7 +75,21 @@
 
 //return true or false if maze can be solved
 -(bool)solve{
-    
+    return NO; //blegh
 }
 
 @end
+
+
+//Things to do:
+//1. Make DFS and BFS algorithim
+//-> Create a 2D array with each string obj and have the maze solver traverse
+//-> the 2D array. (#= wall, . = space, S= start, G = end, P = already passed
+
+//psuedo DFS:
+//begin at start
+//add to the stack next possible position (
+
+
+//pesuedo BFS:
+
