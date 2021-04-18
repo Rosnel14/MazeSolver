@@ -10,6 +10,7 @@
 #import "ListNode.h"
 #import "Stack.h"
 #import "Queue.h"
+#import "CRL2DArray.h"
 
 @implementation Maze
 
@@ -73,10 +74,40 @@
             
 }
 
-//return true or false if maze can be solved
--(bool)solve{
-    return NO; //blegh
+-(NSMutableArray *)DFS {
+    int columns = 0;
+    int rows = 0;
+    for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
+        columns += i;
+    }
+    rows = (int)[self.mazeImage count];
+    
+    //this will initialize a 2D array with the dimensions of the maze
+    CRL2DArray * usableMaze = [[CRL2DArray alloc]initWithRows:rows columns:columns];
+    
+    //this will fill in each individual element in the array with
+    //the specific character (though I'm treating them as strings)
+    //from the text file as was stored into the mazeImage property
+    for(int j=0; j <= rows; j++){ // traverse rows
+        for(int k=0; k <= columns; k++){ //traverse columns
+            NSRange range = NSMakeRange(k, k+1);
+            NSString * object = [[self.mazeImage objectAtIndex:j] substringWithRange:range];
+            [usableMaze insertObject:object atRow:j column:k];
+        }
+    }
+    return [self DFSwrapper:usableMaze];
+    
 }
+
+//I had to create a wrapper because the top method was becoming too verbose
+//and crowded ;(
+//wrapper method will create the solution to maze using DFS
+-(NSMutableArray *)DFSwrapper:(CRL2DArray *)usableMaze{
+    return nil;
+}
+
+
+
 
 @end
 

@@ -10,6 +10,7 @@
 #import "ListNode.h"
 #import "Stack.h"
 #import "Queue.h"
+#import "CRL2DArray.h"
 
 
 //for size options 0 = small, 1=medium, 2= large, 3=huge
@@ -32,8 +33,11 @@
 //constructor as blank maze
 -(instancetype)init;
 
-//solve method, return true or false if the maze can solved
--(bool)solve;
+//DFS algorithim, will return a solved array
+-(NSMutableArray *)DFS;
+
+//BFS algorithim, will return a solved array
+-(NSMutableArray *)BFS;
 
 //construct with a pre-determined filename
 -(instancetype)initWithSize:(int)size;
