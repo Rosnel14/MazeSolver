@@ -24,6 +24,7 @@
 		989AE3872629C9A500168053 /* largeMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = 989AE3862629C9A500168053 /* largeMaze.txt */; };
 		989AE38A2629C9AA00168053 /* hugeMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = 989AE3892629C9AA00168053 /* hugeMaze.txt */; };
 		989AE3A2262BB4CC00168053 /* CRL2DArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 989AE3A1262BB4CC00168053 /* CRL2DArray.m */; };
+		989AE3A6262BC00800168053 /* position.m in Sources */ = {isa = PBXBuildFile; fileRef = 989AE3A5262BC00800168053 /* position.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,8 @@
 		989AE398262BAE3100168053 /* mediumMaze.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = mediumMaze.txt; sourceTree = "<group>"; };
 		989AE3A0262BB4CB00168053 /* CRL2DArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRL2DArray.h; path = "../../../../Documents/CRL2DArray-master/CRL2DArray.h"; sourceTree = "<group>"; };
 		989AE3A1262BB4CC00168053 /* CRL2DArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRL2DArray.m; path = "../../../../Documents/CRL2DArray-master/CRL2DArray.m"; sourceTree = "<group>"; };
+		989AE3A4262BBF9500168053 /* position.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = position.h; sourceTree = "<group>"; };
+		989AE3A5262BC00800168053 /* position.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = position.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,8 @@
 				98489FAD2628793B0096F69D /* ListNode.m */,
 				98489FAC2628792E0096F69D /* ListNode.h */,
 				989AE36E26287D6500168053 /* Maze.m */,
+				989AE3A4262BBF9500168053 /* position.h */,
+				989AE3A5262BC00800168053 /* position.m */,
 				98489FA2262876E50096F69D /* Maze.h */,
 				98489FA3262878EF0096F69D /* Stack.h */,
 				989AE3A0262BB4CB00168053 /* CRL2DArray.h */,
@@ -206,6 +211,7 @@
 				989AE3A2262BB4CC00168053 /* CRL2DArray.m in Sources */,
 				98489F97262872600096F69D /* main.m in Sources */,
 				98489FAA262879110096F69D /* Queue.m in Sources */,
+				989AE3A6262BC00800168053 /* position.m in Sources */,
 				98489FA5262878F70096F69D /* Stack.m in Sources */,
 				989AE36F26287D6500168053 /* Maze.m in Sources */,
 				98489F852628725F0096F69D /* AppDelegate.m in Sources */,

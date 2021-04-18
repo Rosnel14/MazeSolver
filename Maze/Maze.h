@@ -17,14 +17,6 @@
 
 @interface Maze : NSObject
 
-//this stack will be used for
-//pathfinding using DFS
-@property Stack * pathStack;
-
-//this queue will be used for
-//pathfinding using BFS
-@property Queue * pathQueue;
-
 
 //This array *should* be a visual
 //of the array read in from the txt file
@@ -34,10 +26,10 @@
 -(instancetype)init;
 
 //DFS algorithim, will return a solved array
--(NSMutableArray *)DFS;
+-(Stack *)DFS;
 
 //BFS algorithim, will return a solved array
--(NSMutableArray *)BFS;
+-(Queue *)BFS;
 
 //construct with a pre-determined filename
 -(instancetype)initWithSize:(int)size;

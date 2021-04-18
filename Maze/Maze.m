@@ -11,16 +11,13 @@
 #import "Stack.h"
 #import "Queue.h"
 #import "CRL2DArray.h"
+#import "position.h"
 
 @implementation Maze
 
 -(instancetype)init {
     if (self) {
         self = [super init];
-        self.pathQueue = [[Queue alloc] init];
-        self.pathStack = [[Stack alloc]init];
-        self.pathStack = nil;
-        self.pathQueue = nil;
         self.mazeImage = nil;
     }
     return self;
@@ -61,10 +58,6 @@
     
     if(self) {
         self = [super init];
-        self.pathQueue = [[Queue alloc] init];
-        self.pathStack = [[Stack alloc]init];
-        self.pathStack = nil;
-        self.pathQueue = nil;
         
         //probably have to parse each char to create the rectangles later
         self.mazeImage = [fileContent componentsSeparatedByString:@"\n"];
@@ -74,7 +67,7 @@
             
 }
 
--(NSMutableArray *)DFS {
+-(Stack *)DFS {
     int columns = 0;
     int rows = 0;
     for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
@@ -95,15 +88,60 @@
             [usableMaze insertObject:object atRow:j column:k];
         }
     }
-    return [self DFSwrapper:usableMaze];
+    
+    //now I need to figure out which values are the start and which are @ end
+    position * start = [[position alloc]init];
+    position * end =[[position alloc]init];
+    
+    for(int l=0; l <= rows; l++ ) {
+        for(int m = 0; m <= columns; m++) {
+            if([[usableMaze objectAtRow:l column:m] isEqualTo:@"S"]) {
+                start.y=l;
+                start.x=m;
+            }
+            if([[usableMaze objectAtRow:l column:m] isEqualTo:@"G"]) {
+                end.y=l;
+                end.x=m;
+            }
+        }
+    }
+    //this should do it
+    
+    return [self DFSwrapper:usableMaze start:start end:end];
     
 }
 
 //I had to create a wrapper because the top method was becoming too verbose
 //and crowded ;(
 //wrapper method will create the solution to maze using DFS
--(NSMutableArray *)DFSwrapper:(CRL2DArray *)usableMaze{
-    return nil;
+//AHA! I will return a stack of position, that way I can draw it later
+-(Stack *)DFSwrapper:(CRL2DArray *)usableMaze start:(position*) start end:(position *)end{
+    
+    //stack of position, hehe
+    //reminder that traversing in the x position goes across columns
+    //and traversing in the y position goes across rows
+    Stack<position *> * pathStack = [[Stack alloc]init];
+    
+    //first we need to add the starting position to the stack
+    [pathStack push:start];
+ 
+    while([pathStack peek] != end) {
+        position * tempPosition;
+        //check up
+         if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."]) {
+             tempPosition = [[position alloc]initWithCoord:start.x y:start.y+1];
+             [pathStack push:tempPosition];
+         }
+        start = tempPosition;
+         
+         //check down
+      
+         //check right
+         
+         //check left
+    }
+
+    
 }
 
 
