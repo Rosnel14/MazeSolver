@@ -25,10 +25,12 @@
 //constructor as blank maze
 -(instancetype)init;
 
-//DFS algorithim, will return a solved array
+//DFS algorithim, will return a solved set
+//will be useful for displaying the solution later
 -(Stack *)DFS;
 
-//BFS algorithim, will return a solved array
+//BFS algorithim, will return a solved set
+//will be useful for displaying the solution later
 -(Queue *)BFS;
 
 //construct with a pre-determined filename

@@ -105,17 +105,25 @@
             }
         }
     }
-    //this should do it
+    
+  
     
     return [self DFSwrapper:usableMaze start:start end:end];
-    
 }
 
 //I had to create a wrapper because the top method was becoming too verbose
 //and crowded ;(
 //wrapper method will create the solution to maze using DFS
 //AHA! I will return a stack of position, that way I can draw it later
--(Stack *)DFSwrapper:(CRL2DArray *)usableMaze start:(position*) start end:(position *)end{
+-(Stack *)DFSwrapper:(CRL2DArray *)usableMaze start:(position*) start end:(position *)end {
+    
+    int columns = 0;
+    int rows = 0;
+    for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
+        columns += i;
+    }
+    rows = (int)[self.mazeImage count];
+    
     
     //stack of position, hehe
     //reminder that traversing in the x position goes across columns
@@ -125,42 +133,67 @@
     //first we need to add the starting position to the stack
     [pathStack push:start];
  
-    while([pathStack peek] != end) {
+    while(!pathStack.isEmpty && start != end) {
         position * tempPosition;
+        
+        //creating an array that is similar to the current
+        //but it returns to us if a position was traversed or not
+        //will be useful later
+        bool visited[rows][columns];
+        for(int i=0; i<=rows; i++){
+            for(int j=0; j<=columns; j++){
+                visited[i][j] = false;
+            }
+        }
+        
+        //check & add possible branches (i.e. open spot + not visited spot)
+        
         //check up
-         if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."]) {
+         if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."] && visited[start.y-1][start.x]==false ) {
              tempPosition = [[position alloc]initWithCoord:start.x y:start.y-1];
              [pathStack push:tempPosition];
              
              //check down
          }
-        if([[usableMaze objectAtRow:start.y+1 column:start.x] isEqualTo:@"."]) {
+        if([[usableMaze objectAtRow:start.y+1 column:start.x] isEqualTo:@"."] && visited[start.y+1][start.x]==false) {
             tempPosition = [[position alloc]initWithCoord:start.x y:start.y+1];
             [pathStack push:tempPosition];
             
              //check right
         }
-        if([[usableMaze objectAtRow:start.y column:start.x+1] isEqualTo:@"."]) {
+        if([[usableMaze objectAtRow:start.y column:start.x+1] isEqualTo:@"."] && visited[start.y][start.x+1]==false) {
             tempPosition = [[position alloc]initWithCoord:start.x+1 y:start.y];
             [pathStack push:tempPosition];
             
             //check left
         }
-        if([[usableMaze objectAtRow:start.y column:start.x-1] isEqualTo:@"."]) {
+        if([[usableMaze objectAtRow:start.y column:start.x-1] isEqualTo:@"."] && visited[start.y][start.x-1]==false) {
             tempPosition = [[position alloc]initWithCoord:start.x-1 y:start.y];
+            
             [pathStack push:tempPosition];
         }
         
-        //finally check for positions that we have already passed
-        if(start ==[pathStack peek]) {
-            
+        //now we will check and pop if the possible "temp positions are any good"
+        position * newTempPosition = [[position alloc]init];
+        newTempPosition = [pathStack peek];
+        //checking up
+        if(![[usableMaze objectAtRow:newTempPosition.y-1 column:newTempPosition.x] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
+            [pathStack pop];
+            //check down
+        } else if(![[usableMaze objectAtRow:newTempPosition.y+1 column:newTempPosition.x] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ) {
+            [pathStack pop];
+            //check right
+        } else if(![[usableMaze objectAtRow:newTempPosition.y column:newTempPosition.x+1] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
+            [pathStack pop];
+            //check left
+        } else if(![[usableMaze objectAtRow:newTempPosition.y column:newTempPosition.x-1] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ) {
+            [pathStack pop];
         }
+        
         start = [pathStack peek];
     
-
-    
 }
-    
+    return pathStack;
 }
 
 
@@ -173,7 +206,7 @@
 //-> Create a 2D array with each string obj and have the maze solver traverse
 //-> the 2D array. (#= wall, . = space, S= start, G = end, P = already passed
 
-//psuedo DFS:
+//psuedo DFS: DFS is done 4/18
 //begin at start
 //add to the stack next possible position (
 
