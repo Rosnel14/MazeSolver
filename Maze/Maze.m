@@ -129,21 +129,39 @@
         position * tempPosition;
         //check up
          if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."]) {
-             tempPosition = [[position alloc]initWithCoord:start.x y:start.y+1];
+             tempPosition = [[position alloc]initWithCoord:start.x y:start.y-1];
              [pathStack push:tempPosition];
+             
+             //check down
          }
-        start = tempPosition;
-         
-         //check down
-      
-         //check right
-         
-         //check left
-    }
+        if([[usableMaze objectAtRow:start.y+1 column:start.x] isEqualTo:@"."]) {
+            tempPosition = [[position alloc]initWithCoord:start.x y:start.y+1];
+            [pathStack push:tempPosition];
+            
+             //check right
+        }
+        if([[usableMaze objectAtRow:start.y column:start.x+1] isEqualTo:@"."]) {
+            tempPosition = [[position alloc]initWithCoord:start.x+1 y:start.y];
+            [pathStack push:tempPosition];
+            
+            //check left
+        }
+        if([[usableMaze objectAtRow:start.y column:start.x-1] isEqualTo:@"."]) {
+            tempPosition = [[position alloc]initWithCoord:start.x-1 y:start.y];
+            [pathStack push:tempPosition];
+        }
+        
+        //finally check for positions that we have already passed
+        if(start ==[pathStack peek]) {
+            
+        }
+        start = [pathStack peek];
+    
 
     
 }
-
+    
+}
 
 
 
