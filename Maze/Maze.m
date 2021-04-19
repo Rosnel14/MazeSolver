@@ -67,7 +67,7 @@
             
 }
 
--(Stack *)DFS {
+-(Stack *)DFS{
     int columns = 0;
     int rows = 0;
     for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
@@ -151,25 +151,28 @@
         //check up
          if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."] && visited[start.y-1][start.x]==false ) {
              tempPosition = [[position alloc]initWithCoord:start.x y:start.y-1];
+             visited[start.y-1][start.x] = true;
              [pathStack push:tempPosition];
              
              //check down
          }
         if([[usableMaze objectAtRow:start.y+1 column:start.x] isEqualTo:@"."] && visited[start.y+1][start.x]==false) {
             tempPosition = [[position alloc]initWithCoord:start.x y:start.y+1];
+            visited[start.y+1][start.x] = true;
             [pathStack push:tempPosition];
             
              //check right
         }
         if([[usableMaze objectAtRow:start.y column:start.x+1] isEqualTo:@"."] && visited[start.y][start.x+1]==false) {
             tempPosition = [[position alloc]initWithCoord:start.x+1 y:start.y];
+            visited[start.y][start.x+1] = true;
             [pathStack push:tempPosition];
             
             //check left
         }
         if([[usableMaze objectAtRow:start.y column:start.x-1] isEqualTo:@"."] && visited[start.y][start.x-1]==false) {
             tempPosition = [[position alloc]initWithCoord:start.x-1 y:start.y];
-            
+            visited[start.y][start.x-1] = true;
             [pathStack push:tempPosition];
         }
         
@@ -243,6 +246,101 @@
 
 //reducing verbsoity with BFS method
 -(Queue *)BFSwrapper:(CRL2DArray *)usableMaze start:(position *)start end:(position *)end{
+    
+    int columns = 0;
+    int rows = 0;
+    for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
+        columns += i;
+    }
+    rows = (int)[self.mazeImage count];
+    
+    //queue that will store the path,we will eventually return it
+    //reminder that traversing in the x position goes across columns
+    //and traversing in the y position goes across rows
+    Queue<position *> *pathQueue = [[Queue alloc]init];
+    
+    [pathQueue enqueue:start];
+    
+    //creating an array that is similar to the current
+    //but it returns to us if a position was traversed or not
+    //will be useful later
+    bool visited[rows][columns];
+    for(int i=0; i<=rows; i++){
+        for(int j=0; j<=columns; j++){
+            visited[i][j] = false;
+        }
+    }
+    
+    while(!pathQueue.isEmpty){ //while Q is not empty
+        
+        if([pathQueue peek] == end){ //once we reach the end of the path
+            break;
+        }
+        
+        //now we need to check the availibilty of the left,right,up, and down
+        //positions. Should be not too dissimilar from DFS
+        position * tempPosition;
+        
+        //check up
+        if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."] && visited[start.y-1][start.x]==false) {
+            tempPosition = [[position alloc]initWithCoord:start.x y:start.y-1];
+            visited[start.y-1][start.x] = true;
+            [pathQueue enqueue:tempPosition];
+        }
+        
+        //check down
+        if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."] && visited[start.y+1][start.x]==false) {
+            tempPosition = [[position alloc]initWithCoord:start.x y:start.y+1];
+            visited[start.y+1][start.x] = true;
+            [pathQueue enqueue:tempPosition];
+        }
+        
+        //check right
+        if([[usableMaze objectAtRow:start.y column:start.x+1] isEqualTo:@"."] && visited[start.y][start.x+1]==false) {
+            tempPosition = [[position alloc]initWithCoord:start.x+1 y:start.y];
+            visited[start.y][start.x+1] = true;
+            [pathQueue enqueue:tempPosition];
+        }
+        //check left
+        if([[usableMaze objectAtRow:start.y column:start.x-1] isEqualTo:@"."] && visited[start.y][start.x-1]==false) {
+            tempPosition = [[position alloc]initWithCoord:start.x-1 y:start.y];
+            visited[start.y][start.x-1] = true;
+            [pathQueue enqueue:tempPosition];
+        }
+        
+        //now we will check and dequeue if the possible "temp positions are any good"
+        position * newTempPosition = [[position alloc]init];
+        newTempPosition = [pathQueue peek];
+        
+        //checking up
+        if(![[usableMaze objectAtRow:newTempPosition.y-1 column:newTempPosition.x] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
+            [pathQueue dequeue];
+        }
+        
+        //checking down
+        if(![[usableMaze objectAtRow:newTempPosition.y+1 column:newTempPosition.x] isEqualTo:@"."] && visited[newTempPosition.y+1][newTempPosition.x] == true ){
+            [pathQueue dequeue];
+        }
+        
+        //checking left
+        if(![[usableMaze objectAtRow:newTempPosition.y column:newTempPosition.x-1] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
+            [pathQueue dequeue];
+        }
+        
+        //checking right
+        if(![[usableMaze objectAtRow:newTempPosition.y column:newTempPosition.x+1] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
+            [pathQueue dequeue];
+        }
+        
+        //this should get the next item in-queue
+        //eventually this should keep on adding all position in the stack
+        //until the "layerd" approach of BFS finds the "G"
+        //in which case it won't necessarily show the shortest possible path
+        //but rather all the paths that it took until it found the exit.
+        start = [pathQueue peek];
+    }
+    
+    return pathQueue; 
     
 }
 
