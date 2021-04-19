@@ -198,6 +198,55 @@
 
 
 
+//BFS algorithim start here
+-(Queue *)BFS{
+    int columns = 0;
+    int rows = 0;
+    for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
+        columns += i;
+    }
+    rows = (int)[self.mazeImage count];
+    
+    //this will initialize a 2D array with the dimensions of the maze
+    CRL2DArray * usableMaze = [[CRL2DArray alloc]initWithRows:rows columns:columns];
+    
+    //this will fill in each individual element in the array with
+    //the specific character (though I'm treating them as strings)
+    //from the text file as was stored into the mazeImage property
+    for(int j=0; j <= rows; j++){ // traverse rows
+        for(int k=0; k <= columns; k++){ //traverse columns
+            NSRange range = NSMakeRange(k, k+1);
+            NSString * object = [[self.mazeImage objectAtIndex:j] substringWithRange:range];
+            [usableMaze insertObject:object atRow:j column:k];
+        }
+    }
+    
+    //now I need to figure out which values are the start and which are @ end
+    position * start = [[position alloc]init];
+    position * end =[[position alloc]init];
+    
+    for(int l=0; l <= rows; l++ ) {
+        for(int m = 0; m <= columns; m++) {
+            if([[usableMaze objectAtRow:l column:m] isEqualTo:@"S"]) {
+                start.y=l;
+                start.x=m;
+            }
+            if([[usableMaze objectAtRow:l column:m] isEqualTo:@"G"]) {
+                end.y=l;
+                end.x=m;
+            }
+        }
+    }
+    
+    return [self BFSwrapper:usableMaze start:start end:end];
+}
+
+//reducing verbsoity with BFS method
+-(Queue *)BFSwrapper:(CRL2DArray *)usableMaze start:(position *)start end:(position *)end{
+    
+}
+
+
 @end
 
 
