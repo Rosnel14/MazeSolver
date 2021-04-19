@@ -358,5 +358,5 @@
 //add to the stack next possible position (
 
 
-//pesuedo BFS:
+//pesuedo BFS: BFS is done 4/18 
 
