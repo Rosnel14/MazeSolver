@@ -159,7 +159,8 @@
     [direction addObject:left];
     [direction addObject:right];
     
-    while(!pathStack.isEmpty) {//if empty, I don't think there is any possible solution lol
+    while(!pathStack.isEmpty || [[usableMaze objectAtRow:[[pathStack peek]y] column:[[pathStack peek]y]] isEqualTo:@"G"]) {//if empty, I don't think there is any possible solution lol, also it should stop if the last position reaches the end
+        
         position * temp = [[position alloc] initWithCoord:[[pathStack peek]x] y:[[pathStack peek]y]]; //let's use a position pointer for this
         [pathStack pop];// this'll free up the stack from the start position, might be useful so I don't redraw the start rectangle in gamescene
         
@@ -270,7 +271,7 @@
     [direction addObject:left];
     [direction addObject:right];
     
-    while(!pathQueue.isEmpty) {//if empty, I don't think there is any possible solution lol
+    while(!pathQueue.isEmpty || [[usableMaze objectAtRow:[[pathQueue peek]y] column:[[pathQueue peek]x]] isEqualTo:@"G"]) {//if empty, I don't think there is any possible solution lol
         position * temp = [[position alloc] initWithCoord:[[pathQueue peek]x] y:[[pathQueue peek]y]]; //let's use a position pointer for this
         [pathQueue dequeue];// this'll free up the queue from the start position, might be useful so I don't redraw the start rectangle in gamescene
         

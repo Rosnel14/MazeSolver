@@ -23,7 +23,7 @@
     }
     rows = (int)[testMaze.mazeImage count];
     
-    CGFloat w = (self.size.width + self.size.height) * 0.05;
+ //   CGFloat w = (self.size.width + self.size.height) * 0.05;
     
     // Create shape node to use during mouse interaction
 //    wall = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(w, w)];
