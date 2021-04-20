@@ -81,20 +81,26 @@
     //this will fill in each individual element in the array with
     //the specific character (though I'm treating them as strings)
     //from the text file as was stored into the mazeImage property
-    for(int j=0; j <= rows; j++){ // traverse rows
-        for(int k=0; k <= columns; k++){ //traverse columns
-            NSRange range = NSMakeRange(k, k+1);
-            NSString * object = [[self.mazeImage objectAtIndex:j] substringWithRange:range];
+
+    NSString * object;
+    for(int j=1; j < rows; j++){ // traverse rows
+        for(int k=0; k < [[self.mazeImage objectAtIndex:j] length]-1; k++){ //traverse columns
+            char currentChar = [[self.mazeImage objectAtIndex:j] characterAtIndex:k];
+            object =[NSString stringWithFormat:@"%C",currentChar];
             [usableMaze insertObject:object atRow:j column:k];
+            
         }
-    }
+        //Aha, I got it to work! by using a char conversion and then making it a string it works, though it's a bit inefficient 4/19
+    }  ///Aghhhh there is an out of bounds substring error and I can't figure out why this is happening -> -[__NSCFString substringWithRange:]: Range {9, 1} out of bounds; string length 8
+    
+    
     
     //now I need to figure out which values are the start and which are @ end
     position * start = [[position alloc]init];
     position * end =[[position alloc]init];
     
-    for(int l=0; l <= rows; l++ ) {
-        for(int m = 0; m <= columns; m++) {
+    for(int l=0; l <= rows-1; l++ ) {
+        for(int m = 0; m <= columns-1; m++) {
             if([[usableMaze objectAtRow:l column:m] isEqualTo:@"S"]) {
                 start.y=l;
                 start.x=m;
@@ -140,8 +146,8 @@
         //but it returns to us if a position was traversed or not
         //will be useful later
         bool visited[rows][columns];
-        for(int i=0; i<=rows; i++){
-            for(int j=0; j<=columns; j++){
+        for(int i=0; i<=rows-1; i++){
+            for(int j=0; j<=columns-1; j++){
                 visited[i][j] = false;
             }
         }
@@ -216,8 +222,8 @@
     //this will fill in each individual element in the array with
     //the specific character (though I'm treating them as strings)
     //from the text file as was stored into the mazeImage property
-    for(int j=0; j <= rows; j++){ // traverse rows
-        for(int k=0; k <= columns; k++){ //traverse columns
+    for(int j=0; j <= rows-1; j++){ // traverse rows
+        for(int k=0; k <= columns-1; k++){ //traverse columns
             NSRange range = NSMakeRange(k, k+1);
             NSString * object = [[self.mazeImage objectAtIndex:j] substringWithRange:range];
             [usableMaze insertObject:object atRow:j column:k];
@@ -228,8 +234,8 @@
     position * start = [[position alloc]init];
     position * end =[[position alloc]init];
     
-    for(int l=0; l <= rows; l++ ) {
-        for(int m = 0; m <= columns; m++) {
+    for(int l=0; l <= rows-1; l++ ) {
+        for(int m = 0; m <= columns-1; m++) {
             if([[usableMaze objectAtRow:l column:m] isEqualTo:@"S"]) {
                 start.y=l;
                 start.x=m;
@@ -265,8 +271,8 @@
     //but it returns to us if a position was traversed or not
     //will be useful later
     bool visited[rows][columns];
-    for(int i=0; i<=rows; i++){
-        for(int j=0; j<=columns; j++){
+    for(int i=0; i<=rows-1; i++){
+        for(int j=0; j<=columns-1; j++){
             visited[i][j] = false;
         }
     }
