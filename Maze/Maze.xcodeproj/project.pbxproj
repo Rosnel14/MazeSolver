@@ -19,10 +19,6 @@
 		98489FAA262879110096F69D /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489FA9262879110096F69D /* Queue.m */; };
 		98489FAE2628793B0096F69D /* ListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 98489FAD2628793B0096F69D /* ListNode.m */; };
 		989AE36F26287D6500168053 /* Maze.m in Sources */ = {isa = PBXBuildFile; fileRef = 989AE36E26287D6500168053 /* Maze.m */; };
-		989AE3812629C6D200168053 /* smallMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = 989AE3802629C6D200168053 /* smallMaze.txt */; };
-		989AE3842629C99F00168053 /* mediumMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = 989AE3832629C99F00168053 /* mediumMaze.txt */; };
-		989AE3872629C9A500168053 /* largeMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = 989AE3862629C9A500168053 /* largeMaze.txt */; };
-		989AE38A2629C9AA00168053 /* hugeMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = 989AE3892629C9AA00168053 /* hugeMaze.txt */; };
 		989AE3A6262BC00800168053 /* position.m in Sources */ = {isa = PBXBuildFile; fileRef = 989AE3A5262BC00800168053 /* position.m */; };
 		989AE3AB262BE1B200168053 /* CRL2DArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 989AE3AA262BE1B200168053 /* CRL2DArray.m */; };
 /* End PBXBuildFile section */
@@ -50,10 +46,6 @@
 		98489FAC2628792E0096F69D /* ListNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListNode.h; sourceTree = "<group>"; };
 		98489FAD2628793B0096F69D /* ListNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListNode.m; sourceTree = "<group>"; };
 		989AE36E26287D6500168053 /* Maze.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Maze.m; sourceTree = "<group>"; };
-		989AE3802629C6D200168053 /* smallMaze.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = smallMaze.txt; path = ../../../../../Downloads/smallMaze.txt; sourceTree = "<group>"; };
-		989AE3832629C99F00168053 /* mediumMaze.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mediumMaze.txt; path = ../../../../../Downloads/mediumMaze.txt; sourceTree = "<group>"; };
-		989AE3862629C9A500168053 /* largeMaze.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = largeMaze.txt; path = ../../../../../Downloads/largeMaze.txt; sourceTree = "<group>"; };
-		989AE3892629C9AA00168053 /* hugeMaze.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hugeMaze.txt; path = ../../../../../Downloads/hugeMaze.txt; sourceTree = "<group>"; };
 		989AE395262BAE3100168053 /* smallMaze.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = smallMaze.txt; sourceTree = "<group>"; };
 		989AE396262BAE3100168053 /* hugeMaze.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = hugeMaze.txt; sourceTree = "<group>"; };
 		989AE397262BAE3100168053 /* largeMaze.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = largeMaze.txt; sourceTree = "<group>"; };
@@ -123,10 +115,6 @@
 				98489F95262872600096F69D /* Info.plist */,
 				98489F96262872600096F69D /* main.m */,
 				98489F98262872600096F69D /* Maze.entitlements */,
-				989AE3892629C9AA00168053 /* hugeMaze.txt */,
-				989AE3862629C9A500168053 /* largeMaze.txt */,
-				989AE3832629C99F00168053 /* mediumMaze.txt */,
-				989AE3802629C6D200168053 /* smallMaze.txt */,
 			);
 			path = Maze;
 			sourceTree = "<group>";
@@ -187,13 +175,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				989AE38A2629C9AA00168053 /* hugeMaze.txt in Resources */,
-				989AE3842629C99F00168053 /* mediumMaze.txt in Resources */,
 				98489F872628725F0096F69D /* GameScene.sks in Resources */,
 				98489F91262872600096F69D /* Assets.xcassets in Resources */,
-				989AE3812629C6D200168053 /* smallMaze.txt in Resources */,
 				98489F892628725F0096F69D /* Actions.sks in Resources */,
-				989AE3872629C9A500168053 /* largeMaze.txt in Resources */,
 				98489F94262872600096F69D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

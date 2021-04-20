@@ -130,6 +130,15 @@
     }
     rows = (int)[self.mazeImage count];
     
+    //creating an array that is similar to the current
+    //but it returns to us if a position was traversed or not
+    //will be useful later
+    bool visited[rows][columns];
+    for(int i=0; i<=rows-1; i++){
+        for(int j=0; j<=columns-1; j++){
+            visited[i][j] = false;
+        }
+    }
     
     //stack of position, hehe
     //reminder that traversing in the x position goes across columns
@@ -138,71 +147,37 @@
     
     //first we need to add the starting position to the stack
     [pathStack push:start];
- 
-    while(!pathStack.isEmpty && start != end) {
-        position * tempPosition;
-        
-        //creating an array that is similar to the current
-        //but it returns to us if a position was traversed or not
-        //will be useful later
-        bool visited[rows][columns];
-        for(int i=0; i<=rows-1; i++){
-            for(int j=0; j<=columns-1; j++){
-                visited[i][j] = false;
-            }
-        }
-        
-        //check & add possible branches (i.e. open spot + not visited spot)
-        
-        //check up
-         if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."] && visited[start.y-1][start.x]==false ) {
-             tempPosition = [[position alloc]initWithCoord:start.x y:start.y-1];
-             visited[start.y-1][start.x] = true;
-             [pathStack push:tempPosition];
-             
-             //check down
-         }
-        if([[usableMaze objectAtRow:start.y+1 column:start.x] isEqualTo:@"."] && visited[start.y+1][start.x]==false) {
-            tempPosition = [[position alloc]initWithCoord:start.x y:start.y+1];
-            visited[start.y+1][start.x] = true;
-            [pathStack push:tempPosition];
-            
-             //check right
-        }
-        if([[usableMaze objectAtRow:start.y column:start.x+1] isEqualTo:@"."] && visited[start.y][start.x+1]==false) {
-            tempPosition = [[position alloc]initWithCoord:start.x+1 y:start.y];
-            visited[start.y][start.x+1] = true;
-            [pathStack push:tempPosition];
-            
-            //check left
-        }
-        if([[usableMaze objectAtRow:start.y column:start.x-1] isEqualTo:@"."] && visited[start.y][start.x-1]==false) {
-            tempPosition = [[position alloc]initWithCoord:start.x-1 y:start.y];
-            visited[start.y][start.x-1] = true;
-            [pathStack push:tempPosition];
-        }
-        
-        //now we will check and pop if the possible "temp positions are any good"
-        position * newTempPosition = [[position alloc]init];
-        newTempPosition = [pathStack peek];
-        //checking up
-        if(![[usableMaze objectAtRow:newTempPosition.y-1 column:newTempPosition.x] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
-            [pathStack pop];
-            //check down
-        } else if(![[usableMaze objectAtRow:newTempPosition.y+1 column:newTempPosition.x] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ) {
-            [pathStack pop];
-            //check right
-        } else if(![[usableMaze objectAtRow:newTempPosition.y column:newTempPosition.x+1] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
-            [pathStack pop];
-            //check left
-        } else if(![[usableMaze objectAtRow:newTempPosition.y column:newTempPosition.x-1] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ) {
-            [pathStack pop];
-        }
-        
-        start = [pathStack peek];
     
-}
+    //going to create array of position that represent up, down, left, right
+    NSMutableArray<position*> * direction = [[NSMutableArray alloc] initWithCapacity:4];
+    position * up = [[position alloc] initWithCoord:0 y:-1];
+    position * down = [[position alloc] initWithCoord:0 y:1];
+    position * left = [[position alloc] initWithCoord:-1 y:0];
+    position * right = [[position alloc] initWithCoord:1 y:0];
+    [direction addObject:up];
+    [direction addObject:down];
+    [direction addObject:left];
+    [direction addObject:right];
+    
+    while(!pathStack.isEmpty) {//if empty, I don't think there is any possible solution lol
+        position * temp = [[position alloc] initWithCoord:[[pathStack peek]x] y:[[pathStack peek]y]]; //let's use a position pointer for this
+        [pathStack pop];// this'll free up the stack from the start position, might be useful so I don't redraw the start rectangle in gamescene
+        
+        for(int a=0; a<4; a++){ //figured out a better way to check possible directions
+            int nextX = temp.x +[[direction objectAtIndex:a] x];
+            int nextY = temp.y + [[direction objectAtIndex:a]y];
+            
+            if(visited[nextY][nextX] || [[usableMaze objectAtRow:nextY column:nextX] isEqualTo:@"#"] || nextX < 1 || nextY < 1 || nextX > columns || nextY > rows) { //here we check if the next block is visited, if we have a wall, and any of the edge cases where the position would go out of bounds (hopeful it works)
+                continue; //inititate the next iteration of the loop, becuase at this point I know I'm stuck at a wall
+            }
+            position * tempHolder =[[position alloc] initWithCoord:nextX y:nextY]; //ahhh, not sure if this is completely right but I don't know how else to store nX and nY
+            [pathStack push:tempHolder];
+            visited[nextY][nextX] = true;
+        }
+    }
+ 
     return pathStack;
+    
 }
 
 
@@ -222,13 +197,19 @@
     //this will fill in each individual element in the array with
     //the specific character (though I'm treating them as strings)
     //from the text file as was stored into the mazeImage property
-    for(int j=0; j <= rows-1; j++){ // traverse rows
-        for(int k=0; k <= columns-1; k++){ //traverse columns
-            NSRange range = NSMakeRange(k, k+1);
-            NSString * object = [[self.mazeImage objectAtIndex:j] substringWithRange:range];
+
+    NSString * object;
+    for(int j=1; j < rows; j++){ // traverse rows
+        for(int k=0; k < [[self.mazeImage objectAtIndex:j] length]-1; k++){ //traverse columns
+            char currentChar = [[self.mazeImage objectAtIndex:j] characterAtIndex:k];
+            object =[NSString stringWithFormat:@"%C",currentChar];
             [usableMaze insertObject:object atRow:j column:k];
+            
         }
-    }
+        //Aha, I got it to work! by using a char conversion and then making it a string it works, though it's a bit inefficient 4/19
+    }  ///Aghhhh there is an out of bounds substring error and I can't figure out why this is happening -> -[__NSCFString substringWithRange:]: Range {9, 1} out of bounds; string length 8
+    
+    
     
     //now I need to figure out which values are the start and which are @ end
     position * start = [[position alloc]init];
@@ -247,25 +228,18 @@
         }
     }
     
+    
     return [self BFSwrapper:usableMaze start:start end:end];
 }
 
 //reducing verbsoity with BFS method
 -(Queue *)BFSwrapper:(CRL2DArray *)usableMaze start:(position *)start end:(position *)end{
-    
     int columns = 0;
     int rows = 0;
     for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
         columns += i;
     }
     rows = (int)[self.mazeImage count];
-    
-    //queue that will store the path,we will eventually return it
-    //reminder that traversing in the x position goes across columns
-    //and traversing in the y position goes across rows
-    Queue<position *> *pathQueue = [[Queue alloc]init];
-    
-    [pathQueue enqueue:start];
     
     //creating an array that is similar to the current
     //but it returns to us if a position was traversed or not
@@ -277,76 +251,43 @@
         }
     }
     
-    while(!pathQueue.isEmpty){ //while Q is not empty
-        
-        if([pathQueue peek] == end){ //once we reach the end of the path
-            break;
-        }
-        
-        //now we need to check the availibilty of the left,right,up, and down
-        //positions. Should be not too dissimilar from DFS
-        position * tempPosition;
-        
-        //check up
-        if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."] && visited[start.y-1][start.x]==false) {
-            tempPosition = [[position alloc]initWithCoord:start.x y:start.y-1];
-            visited[start.y-1][start.x] = true;
-            [pathQueue enqueue:tempPosition];
-        }
-        
-        //check down
-        if([[usableMaze objectAtRow:start.y-1 column:start.x] isEqualTo:@"."] && visited[start.y+1][start.x]==false) {
-            tempPosition = [[position alloc]initWithCoord:start.x y:start.y+1];
-            visited[start.y+1][start.x] = true;
-            [pathQueue enqueue:tempPosition];
-        }
-        
-        //check right
-        if([[usableMaze objectAtRow:start.y column:start.x+1] isEqualTo:@"."] && visited[start.y][start.x+1]==false) {
-            tempPosition = [[position alloc]initWithCoord:start.x+1 y:start.y];
-            visited[start.y][start.x+1] = true;
-            [pathQueue enqueue:tempPosition];
-        }
-        //check left
-        if([[usableMaze objectAtRow:start.y column:start.x-1] isEqualTo:@"."] && visited[start.y][start.x-1]==false) {
-            tempPosition = [[position alloc]initWithCoord:start.x-1 y:start.y];
-            visited[start.y][start.x-1] = true;
-            [pathQueue enqueue:tempPosition];
-        }
-        
-        //now we will check and dequeue if the possible "temp positions are any good"
-        position * newTempPosition = [[position alloc]init];
-        newTempPosition = [pathQueue peek];
-        
-        //checking up
-        if(![[usableMaze objectAtRow:newTempPosition.y-1 column:newTempPosition.x] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
-            [pathQueue dequeue];
-        }
-        
-        //checking down
-        if(![[usableMaze objectAtRow:newTempPosition.y+1 column:newTempPosition.x] isEqualTo:@"."] && visited[newTempPosition.y+1][newTempPosition.x] == true ){
-            [pathQueue dequeue];
-        }
-        
-        //checking left
-        if(![[usableMaze objectAtRow:newTempPosition.y column:newTempPosition.x-1] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
-            [pathQueue dequeue];
-        }
-        
-        //checking right
-        if(![[usableMaze objectAtRow:newTempPosition.y column:newTempPosition.x+1] isEqualTo:@"."] && visited[newTempPosition.y-1][newTempPosition.x] == true ){
-            [pathQueue dequeue];
-        }
-        
-        //this should get the next item in-queue
-        //eventually this should keep on adding all position in the stack
-        //until the "layerd" approach of BFS finds the "G"
-        //in which case it won't necessarily show the shortest possible path
-        //but rather all the paths that it took until it found the exit.
-        start = [pathQueue peek];
-    }
+
+    //reminder that traversing in the x position goes across columns
+    //and traversing in the y position goes across rows
+    Queue<position *>* pathQueue= [[Queue alloc] init];
     
-    return pathQueue; 
+    //first we need to add the starting position to the queue
+    [pathQueue enqueue:start];
+    
+    //going to create array of position that represent up, down, left, right
+    NSMutableArray<position*> * direction = [[NSMutableArray alloc] initWithCapacity:4];
+    position * up = [[position alloc] initWithCoord:0 y:-1];
+    position * down = [[position alloc] initWithCoord:0 y:1];
+    position * left = [[position alloc] initWithCoord:-1 y:0];
+    position * right = [[position alloc] initWithCoord:1 y:0];
+    [direction addObject:up];
+    [direction addObject:down];
+    [direction addObject:left];
+    [direction addObject:right];
+    
+    while(!pathQueue.isEmpty) {//if empty, I don't think there is any possible solution lol
+        position * temp = [[position alloc] initWithCoord:[[pathQueue peek]x] y:[[pathQueue peek]y]]; //let's use a position pointer for this
+        [pathQueue dequeue];// this'll free up the queue from the start position, might be useful so I don't redraw the start rectangle in gamescene
+        
+        for(int a=0; a<4; a++){ //figured out a better way to check possible directions
+            int nextX = temp.x +[[direction objectAtIndex:a] x];
+            int nextY = temp.y + [[direction objectAtIndex:a]y];
+            
+            if(visited[nextY][nextX] || [[usableMaze objectAtRow:nextY column:nextX] isEqualTo:@"#"] || nextX < 1 || nextY < 1 || nextX > columns || nextY > rows) { //here we check if the next block is visited, if we have a wall, and any of the edge cases where the position would go out of bounds (hopeful it works)
+                continue; //inititate the next iteration of the loop, becuase at this point I know I'm stuck at a wall
+            }
+            position * tempHolder =[[position alloc] initWithCoord:nextX y:nextY]; //ahhh, not sure if this is completely right but I don't know how else to store nX and nY
+            [pathQueue enqueue:tempHolder];
+            visited[nextY][nextX] = true;
+        }
+    }
+ 
+    return pathQueue;
     
 }
 
