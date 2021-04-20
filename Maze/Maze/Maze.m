@@ -86,8 +86,7 @@
     for(int j=1; j < rows; j++){ // traverse rows
         for(int k=0; k < [[self.mazeImage objectAtIndex:j] length]-1; k++){ //traverse columns
             char currentChar = [[self.mazeImage objectAtIndex:j] characterAtIndex:k];
-            object =[NSString stringWithFormat:@"%C",currentChar];
-            [usableMaze insertObject:object atRow:j column:k];
+            object =[NSString stringWithFormat:@"%C",currentChar];            [usableMaze insertObject:object atRow:j column:k];
             
         }
         //Aha, I got it to work! by using a char conversion and then making it a string it works, though it's a bit inefficient 4/19

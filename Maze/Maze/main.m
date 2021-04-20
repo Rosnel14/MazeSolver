@@ -18,12 +18,9 @@ int main(int argc, const char * argv[]) {
         
         Maze * myMaze = [[Maze alloc]initWithSize:0];
 
-        Stack * answer = [[Stack alloc]init];
-
-        answer = [myMaze DFS];
-
+        Stack * answerDFS = [[Stack alloc] init];
         
-        
+        answerDFS = [myMaze DFS]; // Idk why the stack keeps on becoming nil???? 
         
     }
     return NSApplicationMain(argc, argv);
