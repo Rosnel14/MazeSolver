@@ -103,14 +103,16 @@
         
         //creating an array that is similar to the current
         //but it returns to us if a position was traversed or not
-        //will be useful later
-        BOOL visited[[self.mazeImage count]][[self.mazeImage count]];
-        for(int i=0; i<[self.mazeImage count]; i++){
-            for(int j=0; j<[[self.mazeImage objectAtIndex:i] count]; j++){
-                visited[i][j] = NO;
-            }
+        //will be useful later, let's try this {1 = visited, 2 = not-visited}
+    NSMutableArray * visited = [[NSMutableArray alloc] initWithCapacity:[self.mazeImage count]];
+    for(int i=0; i<[self.mazeImage count];i++){
+        NSMutableArray * temp = [[NSMutableArray alloc] init];
+        for(int j=0; j<[[self.mazeImage objectAtIndex:i] count]; j++){
+            [temp addObject:@(NO)];
         }
-    NSLog(@"%d",visited[2][2]);
+        [visited addObject:temp];
+    }
+    
     //stack of position, hehe
     //reminder that traversing in the x position goes across columns
     //and traversing in the y position goes across rows
@@ -134,7 +136,9 @@
         
         position * temp2 = [pathStack peek];
         position * temp = [[position alloc] initWithCoord:temp2.x y:temp2.y]; //let's use a position pointer for this
-        visited[temp.x][temp.y] = true; // this'll free up the stack from the start position, might be useful so I don't redraw the start rectangle in gamescene
+         // marked 1 means that it was visited
+        // this'll free up the stack from the start position, might be useful so I don't redraw the start rectangle in gamescene
+        [pathStack pop];
         bool found = false;
         for(int a=0; a<4; a++){ //figured out a better way to check possible directions
             if(found) {
@@ -145,20 +149,18 @@
             
            
             
-            if(visited[nextY][nextX] == YES|| [[[self.mazeImage objectAtIndex:nextY] objectAtIndex:nextX] isEqualToString:@"#"] || nextX < 1 || nextY < 1 || nextX > [self.mazeImage count] || nextY > [self.mazeImage count]) { //here we check if the next block is visited, if we have a wall, and any of the edge cases where the position would go out of bounds (hopeful it works)
-                
+            if([[[visited objectAtIndex:nextY] objectAtIndex:nextX] isEqualTo:@(YES)] || [[[self.mazeImage objectAtIndex:nextY] objectAtIndex:nextX] isEqualToString:@"#"] || nextX < 1 || nextY < 1 || nextX > [self.mazeImage count] || nextY > [self.mazeImage count]) { //here we check if the next block is visited, if we have a wall, and any of the edge cases where the position would go out of bounds (hopeful it works)
                 continue; //inititate the next iteration of the loop, becuase at this point I know I'm stuck at a wall
             }
             position * tempHolder =[[position alloc] initWithCoord:nextX y:nextY]; //ahhh, not sure if this is completely right but I don't know how else to store nX and nY
             
             found = true;
             [pathStack push:tempHolder];
-            visited[nextY][nextX] = true;
-            NSLog(@"%d",visited[2][2]);
+            //mark as visited
+            [[visited objectAtIndex:nextY] replaceObjectAtIndex:nextX withObject:@(YES)];
             
-//            if([(int)[[self.mazeImage objectAtIndex:nextY] objectAtIndex:nextX]] == 71) {//if reach the end, char val of G
-//                break;
-//            }
+            
+
         }
     
     }
@@ -171,77 +173,43 @@
 
 //BFS algorithim start here
 -(Queue *)BFS{
-    int columns = 0;
-    int rows = 0;
-    for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
-        columns += i;
-    }
-    rows = (int)[self.mazeImage count];
-    
-    //this will initialize a 2D array with the dimensions of the maze
-    CRL2DArray * usableMaze = [[CRL2DArray alloc]initWithRows:rows columns:columns];
-    
-    //this will fill in each individual element in the array with
-    //the specific character (though I'm treating them as strings)
-    //from the text file as was stored into the mazeImage property
-
-    NSString * object;
-    for(int j=1; j < rows; j++){ // traverse rows
-        for(int k=0; k < [[self.mazeImage objectAtIndex:j] length]-1; k++){ //traverse columns
-            char currentChar = [[self.mazeImage objectAtIndex:j] characterAtIndex:k];
-            object =[NSString stringWithFormat:@"%C",currentChar];
-            [usableMaze insertObject:object atRow:j column:k];
-            
-        }
-        //Aha, I got it to work! by using a char conversion and then making it a string it works, though it's a bit inefficient 4/19
-    }  ///Aghhhh there is an out of bounds substring error and I can't figure out why this is happening -> -[__NSCFString substringWithRange:]: Range {9, 1} out of bounds; string length 8
-    
-    
     
     //now I need to figure out which values are the start and which are @ end
     position * start = [[position alloc]init];
     position * end =[[position alloc]init];
     
-    for(int l=0; l <= rows-1; l++ ) {
-        for(int m = 0; m <= columns-1; m++) {
-            if([[usableMaze objectAtRow:l column:m] isEqualTo:@"S"]) {
-                start.y=l;
-                start.x=m;
+    for(int i=0; i<[self.mazeImage count]; i++){ //rows
+        for(int j=0; j<[[self.mazeImage objectAtIndex:i] count]; j++){//columns
+            
+            if([[[self.mazeImage objectAtIndex:i] objectAtIndex:j] isEqualToString:@"S"] ){ //S char
+                start.x = j;
+                start.y = i;
             }
-            if([[usableMaze objectAtRow:l column:m] isEqualTo:@"G"]) {
-                end.y=l;
-                end.x=m;
+            
+            if([[[self.mazeImage objectAtIndex:i] objectAtIndex:j] isEqualToString:@"G"] ){ //G char
+                end.x = j;
+                end.y = i;
             }
+
         }
     }
-    
-    
-    return [self BFSwrapper:usableMaze start:start end:end];
-}
-
-//reducing verbsoity with BFS method
--(Queue *)BFSwrapper:(CRL2DArray *)usableMaze start:(position *)start end:(position *)end{
-    int columns = 0;
-    int rows = 0;
-    for (int i = 0; i < [self.mazeImage.firstObject length]-1;i++) {
-        columns += i;
-    }
-    rows = (int)[self.mazeImage count];
-    
-    //creating an array that is similar to the current
-    //but it returns to us if a position was traversed or not
-    //will be useful later
-    bool visited[rows][columns];
-    for(int i=0; i<=rows-1; i++){
-        for(int j=0; j<=columns-1; j++){
-            visited[i][j] = false;
+        
+        //creating an array that is similar to the current
+        //but it returns to us if a position was traversed or not
+        //will be useful later, let's try this {1 = visited, 2 = not-visited}
+    NSMutableArray * visited = [[NSMutableArray alloc] initWithCapacity:[self.mazeImage count]];
+    for(int i=0; i<[self.mazeImage count];i++){
+        NSMutableArray * temp = [[NSMutableArray alloc] init];
+        for(int j=0; j<[[self.mazeImage objectAtIndex:i] count]; j++){
+            [temp addObject:@(NO)];
         }
+        [visited addObject:temp];
     }
     
-
+    //queue of position, hehe
     //reminder that traversing in the x position goes across columns
     //and traversing in the y position goes across rows
-    Queue* pathQueue= [[Queue alloc] init];
+    Queue * pathQueue = [[Queue alloc] init];
     
     //first we need to add the starting position to the queue
     [pathQueue enqueue:start];
@@ -257,26 +225,46 @@
     [direction addObject:left];
     [direction addObject:right];
     
-    while(!pathQueue.isEmpty || [[usableMaze objectAtRow:[[pathQueue peek]y] column:[[pathQueue peek]x]] isEqualTo:@"G"]) {//if empty, I don't think there is any possible solution lol
-        position * temp = [[position alloc] initWithCoord:[[pathQueue peek]x] y:[[pathQueue peek]y]]; //let's use a position pointer for this
-        [pathQueue dequeue];// this'll free up the queue from the start position, might be useful so I don't redraw the start rectangle in gamescene
+    while(![pathQueue isEmpty] || ([pathQueue peek].x == end.x && [pathQueue peek].y == end.y)) {//if empty, I don't think there is any possible solution
         
+        position * temp2 = [pathQueue peek];
+        position * temp = [[position alloc] initWithCoord:temp2.x y:temp2.y]; //let's use a position pointer for this
+         // marked 1 means that it was visited
+        // this'll free up the stack from the start position, might be useful so I don't redraw the start rectangle in gamescene
+        [pathQueue dequeue];
+        bool found = false;
         for(int a=0; a<4; a++){ //figured out a better way to check possible directions
+            if(found) {
+                break;
+            }
             int nextX = temp.x +[[direction objectAtIndex:a] x];
             int nextY = temp.y + [[direction objectAtIndex:a]y];
             
-            if(visited[nextY][nextX] || [[usableMaze objectAtRow:nextY column:nextX] isEqualTo:@"#"] || nextX < 1 || nextY < 1 || nextX > columns || nextY > rows) { //here we check if the next block is visited, if we have a wall, and any of the edge cases where the position would go out of bounds (hopeful it works)
+           
+            
+            if([[[visited objectAtIndex:nextY] objectAtIndex:nextX] isEqualTo:@(YES)] || [[[self.mazeImage objectAtIndex:nextY] objectAtIndex:nextX] isEqualToString:@"#"] || nextX < 1 || nextY < 1 || nextX > [self.mazeImage count] || nextY > [self.mazeImage count]) { //here we check if the next block is visited, if we have a wall, and any of the edge cases where the position would go out of bounds (hopeful it works)
                 continue; //inititate the next iteration of the loop, becuase at this point I know I'm stuck at a wall
             }
             position * tempHolder =[[position alloc] initWithCoord:nextX y:nextY]; //ahhh, not sure if this is completely right but I don't know how else to store nX and nY
+            
+            found = true;
             [pathQueue enqueue:tempHolder];
-            visited[nextY][nextX] = true;
+            //mark as visited
+            [[visited objectAtIndex:nextY] replaceObjectAtIndex:nextX withObject:@(YES)];
+            
+            
+
         }
+    
     }
  
     return pathQueue;
     
+   
 }
+
+
+
 
 
 @end
