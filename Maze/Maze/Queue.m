@@ -28,7 +28,7 @@
     return self;
 }
 
--(instancetype)initWithHeadObject:(id)h{
+-(instancetype)initWithHeadObject:(position *)h{
     self = [super init];
     if(self){
         self.head = [[ListNode alloc] initWithObject:h];
@@ -48,7 +48,7 @@
 }
 
 //push an item onto the queue
--(bool)enqueue : (id) item{
+-(bool)enqueue : (position *) item{
     if(!self.head){
         self.head = [[ListNode alloc] initWithObject:item];
         return true;
@@ -58,7 +58,7 @@
 }
 
 //removes and returns the item on the top of the queue
--(id)dequeue{
+-(position *)dequeue{
     ListNode *node = self.head;
     if(self.head){
         self.head = self.head.next;
@@ -67,7 +67,7 @@
 }
 
 //returns the item on the top of the queue
--(id)peek{
+-(position *)peek{
     return self.head.object;
 }
 

@@ -11,18 +11,18 @@
 
 #import "ListNode.h"
 
-@interface Queue<ObjectType> : NSObject
+@interface Queue : NSObject
 
-@property (nonatomic) ListNode<ObjectType> *head;
+@property (nonatomic) ListNode *head;
 
 //constructor
 -(instancetype)initWithHeadNode:(ListNode *)h;
--(instancetype)initWithHeadObject:(id)h;
+-(instancetype)initWithHeadObject:(position *)h;
 
 //methods
--(bool)enqueue : (id) item; //push an item onto the queue
--(id)dequeue; //removes and returns the item on the top of the queue
--(id)peek; //returns the item on the top of the queue
+-(bool)enqueue : (position *) item; //push an item onto the queue
+-(position *)dequeue; //removes and returns the item on the top of the queue
+-(position *)peek; //returns the item on the top of the queue
 -(bool)isEmpty; //returns true if the queue is empty, false otherwise
 -(int)size; //returns the size of the queue
 -(void)print; //print out every element in the queue

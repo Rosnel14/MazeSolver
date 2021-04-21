@@ -27,7 +27,7 @@
     return self;
 }
 
--(instancetype)initWithHeadObject:(id)h{
+-(instancetype)initWithHeadObject:(position *)h{
     self = [super init];
     if(self){
         self.head = [[ListNode alloc] initWithObject:h];
@@ -50,7 +50,7 @@
 }
 
 //push an item onto the stack
--(bool)push : (id) item{
+-(bool)push : (position *) item{
     if(!self.head){
         self.head = [[ListNode alloc] initWithObject:item];
         return true;
@@ -65,37 +65,30 @@
 }
 
 //removes and returns the item on the top of the stack
--(id)pop{
+-(position *)pop{
     if(!self.head){
         return NULL;
     }
-    if(!self.head.next){
-        ListNode *temp = self.head;
-        self.head = NULL;
-        return temp;
-    }
-    ListNode *cur = [self beforeLast];
-    ListNode *temp = cur.next;
-    cur.next = NULL;
-    return temp.object;
+    ListNode * temp = self.head;
+    self.head =self.head.next;
+    return temp.object; 
 }
 
 //returns the item on the top of the stack
--(id)peek{
+-(position *)peek{
     if(!self.head){
         return NULL;
     }
-    if(!self.head.next){
-        ListNode *temp = self.head;
-        return temp;
-    }
-    ListNode *temp = [self beforeLast].next;
-    return temp.object;
+    return self.head.object;
 }
 
 //returns true if the stack is empty, false otherwise
 -(bool)isEmpty{
-    return self.head;
+    if(self.head == nil) {
+        return YES;
+    } else{
+        return NO;
+    }
 }
 
 //returns the size of the stack

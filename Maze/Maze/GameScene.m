@@ -14,14 +14,14 @@
 }
 
 - (void)didMoveToView:(SKView *)view {
-    Maze * testMaze = [[Maze alloc]initWithSize:0];
-    // Setup your scene here
-    int columns = 0;
-    int rows = 0;
-    for (int i = 0; i < [testMaze.mazeImage.firstObject length]-1;i++) {
-        columns += i;
-    }
-    rows = (int)[testMaze.mazeImage count];
+//    Maze * testMaze = [[Maze alloc]initWithSize:0];
+//    // Setup your scene here
+//    int columns = 0;
+//    int rows = 0;
+//    for (int i = 0; i < [testMaze.mazeImage.firstObject length]-1;i++) {
+//        columns += i;
+//    }
+//    rows = (int)[testMaze.mazeImage count];
     
  //   CGFloat w = (self.size.width + self.size.height) * 0.05;
     

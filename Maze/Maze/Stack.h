@@ -8,19 +8,20 @@
 #ifndef Stack_h
 #define Stack_h
 #import "ListNode.h"
+#import "position.h"
 
-@interface Stack<ObjectType> : NSObject
+@interface Stack : NSObject
 
-@property (nonatomic) ListNode<ObjectType> *head;
+@property (nonatomic) ListNode *head;
 
 //constructor
 -(instancetype)initWithHeadNode:(ListNode *)h;
--(instancetype)initWithHeadObject:(id)h;
+-(instancetype)initWithHeadObject:(position *)h;
 
 //methods
 -(bool)push : (id) item; //push an item onto the stack
--(id)pop; //removes and returns the item on the top of the stack
--(id)peek; //returns the item on the top of the stack
+-(position *)pop; //removes and returns the item on the top of the stack
+-(position *)peek; //returns the item on the top of the stack
 -(bool)isEmpty; //returns true if the stack is empty, false otherwise
 -(int)size; //returns the size of the stack
 -(void)print; //print out every element in the list

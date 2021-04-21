@@ -11,7 +11,7 @@
 @implementation ListNode:NSObject
 
 
-- (instancetype)initWithObject:(id)object {
+- (instancetype)initWithObject:(position *)object {
     self = [super init];
     if (self) {
         self.object = object;
@@ -25,7 +25,7 @@
 
 }
 
-- (instancetype)initWithObject:(id)object andNextNode:(ListNode *)node {
+- (instancetype)initWithObject:(position *)object andNextNode:(ListNode *)node {
     self = [super init];
     if (self) {
         self.object = object;

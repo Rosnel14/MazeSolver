@@ -9,15 +9,16 @@
 #ifndef ListNode_h
 #define ListNode_h
 
-@interface ListNode<ObjectType>:NSObject
+#import "position.h"
+@interface ListNode:NSObject
 
-@property  id object;
+@property  position * object;
 
 @property ListNode *next;
 
-- (instancetype)initWithObject:(id)object;
+- (instancetype)initWithObject:(position *)object;
 
-- (instancetype)initWithObject:(id)object andNextNode:(ListNode *)node;
+- (instancetype)initWithObject:(position *)object andNextNode:(ListNode *)node;
 
 - (instancetype)init;
 

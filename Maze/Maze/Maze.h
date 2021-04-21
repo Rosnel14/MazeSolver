@@ -20,7 +20,8 @@
 
 //This array *should* be a visual
 //of the array read in from the txt file
-@property NSArray * mazeImage;
+@property NSMutableArray * mazeImage;
+
 
 //constructor as blank maze
 -(instancetype)init;
