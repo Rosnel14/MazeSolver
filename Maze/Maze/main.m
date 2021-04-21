@@ -17,14 +17,23 @@ int main(int argc, const char * argv[]) {
         // Setup code that might create autoreleased objects goes here.
         
         Maze * myMaze = [[Maze alloc]initWithSize:0];
-        
-//       NSLog(@"%@",[myMaze.mazeImage firstObject]);
-//
+    
         Stack * answerDFS = [[Stack alloc] init];
         
-        answerDFS = [myMaze DFS]; // Idk why the stack keeps on becoming nil????
+        Queue * answerBFS = [[Queue alloc] init];
+        
+        
+        //this is my iterative implementation
+        answerDFS = [myMaze DFS];
+        
+        answerBFS = [myMaze BFS];
         
         [answerDFS print];
+        
+        [answerBFS print];
+        //end of iterative implementation
+        
+        
         
     }
     return NSApplicationMain(argc, argv);
